@@ -1,0 +1,5 @@
+#!/bin/sh
+
+base=$(basename "$1" .md)
+pandoc -t beamer -V colortheme=spruce -i --highlight-style=kate "$base.md" -o "$base.pdf"
+
