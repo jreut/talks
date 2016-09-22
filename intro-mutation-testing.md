@@ -12,6 +12,8 @@ without causing test failures.
 - Another kind of coverage metric
 - Perhaps more interestingly, a _driver_ of implementation
 
+. . .
+
 ### Assumptions (requirements, really)
 
 - Your specs are passing
@@ -31,16 +33,15 @@ without causing test failures.
 
 For a project of trivial complexity (3 classes, 15 examples):
 
-- `rspec` takes less than 0.1 seconds, including startup
-- `mutant` takes 3 seconds with 132 mutations, running 8 jobs in parallel
+> - `rspec` takes less than 0.1 seconds, including startup
+> - `mutant` takes 3 seconds with 132 mutations, running 8 jobs in parallel
 
 ## Technical details
 
 If you care to follow along:
 
-- <https://github.com/jreut/key-value-store.git>
-
-- `mutant-rspec` gem: <https://github.com/mbj/mutant>
+> - <https://github.com/jreut/key-value-store.git>
+> - `mutant-rspec` gem: <https://github.com/mbj/mutant>
 
 # Try it out
 
