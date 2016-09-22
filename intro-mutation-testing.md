@@ -6,23 +6,19 @@
 
 ## What is it for?
 
-Running 
+Mutation testing looks for cases where production code changes could slip by
+without causing test failures.
 
 - Another kind of coverage metric
 - Perhaps more interestingly, a _driver_ of implementation
 
-## Assumptions
+### Assumptions (requirements, really)
 
 - Your specs are passing
 - Your specs are not flaky
 - Your specs are _fast_
 
-## What does it mean?
-
-Mutation testing looks for cases where production code changes could slip past
-tests.
-
-The algorithm:
+## The algorithm
 
 1. Run a given spec, expecting it to pass
 1. Load the code to be tested by a given spec
