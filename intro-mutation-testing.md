@@ -19,22 +19,52 @@ without causing test failures.
 - Your specs are passing
 - Your specs are not flaky
 - Your specs are _fast_
+* Your specs pass in random order
+* Your specs pass under concurrency
+
+Or, at least a subset of your specs can satisfy these criteria. You can mark
+mutation-stable specs with `mutant: true`.
 
 ## The algorithm
 
-1. Run a given spec, expecting it to pass
 1. Load the code to be tested by a given spec
 1. Parse that code into an AST
 1. Mutate a single node on that tree, eg. turn `false` to `true`
-1. Run the entire spec, expecting it to fail
-1. Repeat from (2) for all possible mutations
+1. Run the specs whose subjects match Mutant's argument
+1. Repeat from (3) for all possible mutations^[Mutant first inserts an unmodified AST as a sanity check]
 
 ## Why does it have to be fast?
 
-For a project of trivial complexity (3 classes, 15 examples):
+We can benchmark a project of trivial complexity (3 classes, 15 examples).
 
-> - `rspec` takes less than 0.1 seconds, including startup
-> - `mutant` takes 3 seconds with 132 mutations, running 8 jobs in parallel
+### RSpec runtime
+
+RSpec runs in a single process, so reported runtime is good enough.
+
+    $ bundle exec rake spec
+
+    ...
+
+    Finished in 0.00697 seconds (files took 0.10224 seconds to load)
+    15 examples, 0 failures
+
+### Mutant runtime
+
+    $ bundle exec rake mutant
+
+    ...
+
+    Runtime:         3.39s
+    Killtime:        11.34s
+    Overhead:        -70.15%
+    Mutations/s:     38.99
+    Coverage:        100.00%
+
+This project is too small to make meaningful comparisons, but it's conceivable
+Mutant takes at least an order of magnitude longer than RSpec.
+
+Mutant spawns a child for each of its mutations. It aggregates the realtime of
+its children into a concept called "killtime".
 
 ## Technical details
 
@@ -299,3 +329,22 @@ class Store
   def delete(k) # ...
 end
 ```
+
+# Appendix
+
+### Acknowledgements
+
+Thanks to Mutant's author [Markus Schirp \@mbj][mbj-github].
+
+### Links
+
+- [Mutant][mutant-github]
+- [toy key-value store][toy-github]
+- [Mutation Testing Slack team][mutant-slack-join]
+
+# ∎
+
+[mbj-github]: https://github.com/mbj
+[mutant-github]: https://github.com/mbj/mutant
+[toy-github]: https://github.com/jreut/key-value/store
+[mutant-slack-join]: https://mutation-testing-slack.herokuapp.com/
