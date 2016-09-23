@@ -332,17 +332,17 @@ end
 
 # Appendix
 
+##
+
 ### Acknowledgements
 
 Thanks to Mutant's author [Markus Schirp \@mbj][mbj-github].
 
 ### Links
 
-- [Mutant][mutant-github]
-- [toy key-value store][toy-github]
-- [Mutation Testing Slack team][mutant-slack-join]
-
-# ∎
+> - [Mutant][mutant-github]
+> - [toy key-value store][toy-github]
+> - [Mutation Testing Slack team][mutant-slack-join]
 
 [mbj-github]: https://github.com/mbj
 [mutant-github]: https://github.com/mbj/mutant
