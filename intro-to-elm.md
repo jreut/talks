@@ -2,65 +2,44 @@
 % Jordan Ryan Reuter
 % 31 Oct 2017
 
-# I hate the front end
+# Web history
+
+## First, some pertinent images {.shrink .c}
+
+. . .
+
+![A spooky tree](https://c1.staticflickr.com/9/8262/8701149466_95d7360127_b.jpg)
+
+## First, some pertinent images {.shrink .c}
+
+![A Jack O'Lantern](https://c1.staticflickr.com/3/2279/1795110611_35b40b26c1_b.jpg)
+
+## First, some pertinent images {.shrink .c}
+
+![A skeleton (fish)](https://upload.wikimedia.org/wikipedia/commons/7/73/BLW_Meyer's_Butterfly_Fish.jpg)
+
+## First, some pertinent images {.shrink .c}
+
+![Some Día de los Muertes confections](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Alfe%C3%B1iques_or_sugar_fugures.jpg/1024px-Alfe%C3%B1iques_or_sugar_fugures.jpg)
+
+## First, some pertinent images {.shrink .c}
+
+![My favorite animal](https://upload.wikimedia.org/wikipedia/commons/c/c9/Bubo_virginianus00.jpg)
+
+## First, some pertinent images {.shrink .c}
+
+![The spookiest of all](https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png)
 
 # Web history
 
-## the Web circa 2016
+## Everyone hates JavaScript
 
-- HTML5 is widely implemented
-- Immutablity is cool
-- jQuery is still alive
-- CSS-driven animations are on the rise
-
-## the Web circa 2010
-
-> - ~~HTML5 is widely implemented~~
-> - ~~Immutablity is cool~~
-> - ~~jQuery is still alive~~
-> - ~~CSS-driven animations are on the rise~~
-
-## the Web circa 2010
-
-> - HTML5 is a Working Draft
-> - ~~Immutablity is cool~~
-> - ~~jQuery is still alive~~
-> - ~~CSS-driven animations are on the rise~~
-
-## the Web circa 2010
-
-> - HTML5 is a Working Draft
-> - IIFEs and Coffeescript are cool
-> - ~~jQuery is still alive~~
-> - ~~CSS-driven animations are on the rise~~
-
-## the Web circa 2010
-
-> - HTML5 is a Working Draft
-> - IIFEs and Coffeescript are cool
-> - jQuery is basically required by default
-> - ~~CSS-driven animations are on the rise~~
-
-## the Web circa 2010
-
-> - HTML5 is a Working Draft
-> - IIFEs and Coffeescript are cool
-> - jQuery is basically required by default
-> - CSS gets the box model!
-
-# The Rise of Structure
-
-## JavaScript libraries
-
-Facebook introduced us to immutability
-
-- ImmutableJS
-- React
-- Flux/Redux
+But we're stuck with it.
 
 ## Transpiled languages
 
-Everyone agreess JavaScript lacks one thing---strong types.
+Instead of trying to get every Web browser to implement some other language
+interpreter, some folks are writing languages that compile to JavaScript.
 
 . . .
 
@@ -96,6 +75,7 @@ Everyone agreess JavaScript lacks one thing---strong types.
 - Everything is a _value_. Null &rarr; Maybe
 - Immutable by default
 - Side effects are bundled into monads^[Don't worry, monads aren't scary!]
+- Events, actions, etc. are _data_.
 - __No runtime exceptions.__ "If it compiles, it runs"^[I had one runtime exception because I was doing weird stuff.]
 
 ## The Elm Architecture
@@ -157,12 +137,10 @@ main = beginnerProgram
 
 To note:
 
-- explicit `Main` module
-- required `main` function
-- alias `Html.App` to `App`
+- explicit `Main` module and `main` function
 - hash-like thing (it's a _record_)
 - compile-time checked, inferred types
-- formatting on save via [elm-format](elm-format)
+<!-- - formatting on save via [elm-format](elm-format) -->
 
 ## Binding input
 
@@ -198,7 +176,7 @@ main = beginnerProgram
 
 type alias Model = String
 
-type alias Msg = NoOp -- we'll come back to this
+type Msg = NoOp -- we'll come back to this
 
 init : Model
 init = "Hello, world!"
@@ -232,20 +210,15 @@ beginnerProgram
 You provide the initial state, a way to update that state, and a way to render
 it. Elm wires up everything else for you.
 
-## Bind input { .shrink }
-
-### Add an action
+## Bind input
 
 ```elm
-import Html.Events exposing (onInput)
-
-type alias Msg = ChangeHeader String
+type Msg = ChangeHeader String
 
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        ChangeHeader string ->
-            string
+        ChangeHeader string -> string
 
 view : Model -> Html Msg
 view model =
@@ -254,10 +227,6 @@ view model =
         , input [ onInput ChangeHeader ] []
         ]
 ```
-
-. . .
-
-To note:
 
 > - `onInput` _requires_ an action that takes a `String`.^[Its type is `onInput : (String -> msg) -> Html.Attribute msg`]
 
