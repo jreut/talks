@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ -n "$1" ]
+then
+  MARKDOWN=$1
+else
+  echo "You need to provide a filename"
+  exit 1
+fi
+
+IMAGE=jreut/texlive
+DOCUMENT_PATH=/usr/src/doc
+COMMAND=bin/build
+
+docker run --rm -v "$(pwd):$DOCUMENT_PATH" -w $DOCUMENT_PATH $IMAGE $COMMAND "$MARKDOWN"
