@@ -1,5 +1,12 @@
 #!/bin/sh
 
 base=$(basename "$1" .md)
-pandoc -S -t beamer -V colortheme=spruce --highlight-style=kate "$base.md" -o "$base.pdf"
+pandoc \
+  -S \
+  -t beamer \
+  -V colortheme=spruce \
+  -V fontsize=10pt \
+  --highlight-style=kate \
+  --latex-engine=xelatex \
+  "$base.md" -o "$base.pdf"
 
