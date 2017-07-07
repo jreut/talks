@@ -195,7 +195,7 @@ look, we reused the blob!
 ## copying a file
 
 ```sh
-tree .git/objects
+% tree .git/objects
 
 .git/objects
 ├── 3d/ # the root commit's tree
@@ -241,10 +241,44 @@ tree .git/objects
 100644 blob 6566899ce31c049799f8f79c2ec72092ddc31fc8	c
 ```
 
-## interlude
+# interlude
 
-### what's up with `.gitkeep`?
+## what's up with `.gitkeep`?
 
 - tree objects _must_ be nonempty
 
 - `.gitkeep` is a convention for making a nonempty directory
+
+## the graph
+
+```sh
+% tree .git/objects
+
+.git/objects
+├── 3d/ # the root commit's tree
+│   └── afa3ae74c689274be2cc26b53d7d850f7a79e1
+├── 65/ # our lonely blob
+│   └── 66899ce31c049799f8f79c2ec72092ddc31fc8
+├── 6e/ # the second commit's tree
+│   └── 69a27840b4463b0cbf90e69f6b9f9426c552e2
+├── 84/ # the second commit
+│   └── d0a3247cb13a4aebdcf4e11b4b2b4cc33c2205
+├── a2/ # the root commit
+│   └── 459f444c58cd71cd1e47367faeecae8acfd15d
+├── cb/ # the third commit (our current HEAD)
+│   └── f2bd279d18b6cec6cff122ff1379cf23655e9f
+├── dd/ # the third commit's toplevel tree
+│   └── 9127813ea3c413faa7204454829b9cffdb8dd8
+└── e6/ # the third commit's subtree
+    └── 4c2de4724a32cf98e1aa3d16aff43d07d828f2
+```
+
+## the graph
+
+![all the objects in our repository](img/git-graph.pdf)
+
+# refs
+
+# merging
+
+# the rebase
