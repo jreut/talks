@@ -1,5 +1,6 @@
 % ALL YOUR REBASE ARE BELONG TO US
 % or: the internals of "the stupid content tracker"
+% 24 July 2017
 
 # Git internals
 
@@ -381,3 +382,144 @@ ref: refs/heads/my-great-ref
 1. read current `HEAD` (say, `refs: refs/heads/my-branch`)
 1. read commit referenced by `some-ref`
 1. write commit id to `refs/heads/my-branch`
+
+# rewriting history
+
+## not so scary!
+
+- committed on the wrong branch
+- squash many commits into one
+- bring an old feature branch up to date
+
+## committed on the wrong branch
+
+### our normal workflow
+
+1. pull latest `develop`
+1. checkout a feature branch
+1. do some work
+1. push feature branch and open merge request
+
+### what I sometimes do
+
+1. pull latest develop
+1. forget to checkout a feature branch
+1. do some work
+1. realize I just committed to develop
+1. fix it really easily!
+
+## committed on the wrong branch
+
+![before](img/reset-develop-1.pdf)
+
+## committed on the wrong branch
+
+![accidentally committing to develop](img/reset-develop-2.pdf)
+
+## committed on the wrong branch
+
+![checkout a new branch](img/reset-develop-3.pdf)
+
+## committed on the wrong branch
+
+![reset develop](img/reset-develop-4.pdf)
+
+## committed on the wrong branch
+
+```sh
+% git checkout -b my-feature    # make a new feature branch
+% git checkout develop          # go back to develop
+% git reset --hard HEAD^        # point develop to previous commit
+% git checkout my-feature       # go back to feature branch
+% git push -u origin my-feature # push and enjoy
+```
+
+## squash many commits into one
+
+### why?
+
+- group related changes together
+- clean up mistakes
+
+## squash many commits into one
+
+![before](img/squash-1.pdf)
+
+## squash many commits into one
+
+![make a new commit](img/squash-2.pdf)
+
+## squash many commits into one
+
+![squash into one](img/squash-3.pdf)
+
+## squash many commits into one
+
+```sh
+% git commit -m 'some feature'
+% git push -u origin my-feature
+% git commit --fixup=HEAD
+% git rebase --autosquash HEAD^
+% git push -uf origin my-feature
+```
+
+## bring an old feature branch up to date
+
+### our normal workflow
+
+1. do work
+1. wait too long
+1. merge conflicts!
+1. "could you merge develop?"
+
+### what I usually do
+
+1. do work
+1. wait too long
+1. merge conflicts!
+1. rebase onto develop
+
+## bring an old feature branch up to date
+
+![before](img/rebase-1.pdf)
+
+## bring an old feature branch up to date
+
+![wait too long](img/rebase-2.pdf)
+
+## bring an old feature branch up to date
+
+![catch up](img/rebase-3.pdf)
+
+## bring an old feature branch up to date
+
+```sh
+% git commit -m 'some feature'
+% git push -u origin my-feature
+# ...several days pass...
+% git remote update origin
+% git rebase origin/develop
+% git push -uf origin my-feature
+```
+
+# let's do it live
+
+## let's do it live
+
+- interactive rebase
+- using reflogs
+- working with remotes
+- anything else?
+
+# appendix
+
+## references
+
+- [Pro Git (free!)](https://git-scm.com/book/en/v2)
+    - [§3.2: Basic Branching & Merging](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging#_basic_merging)
+    - [§7.1: Revision Selection](https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection)
+    - [§10: Git Internals](https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain)
+
+- manpages (they're great!)
+    - _gitrevisions(7)_ and _git-rev-parse(1)_
+    - _git-rebase(1)_
