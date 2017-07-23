@@ -279,6 +279,105 @@ look, we reused the blob!
 
 # refs
 
-# merging
+## references to commits
 
-# the rebase
+### In a new repo...
+
+```sh
+% tree .git
+
+.git
+├── HEAD
+├── config
+├── objects/
+│   ├── info/
+│   └── pack/
+└── refs/
+    ├── heads/
+    └── tags/
+```
+
+
+## refs are just files
+
+```sh
+% git commit --allow-empty --allow-empty-message
+
+[master (root-commit) 8495043]
+
+% tree .git/refs
+
+.git/refs
+├── heads/
+│   └── master
+└── tags/
+
+% cat .git/refs/heads/master
+
+8495043ef1734f7d23a6d116e596bd97e404e48c
+```
+
+
+## make our own ref
+
+```sh
+% echo 8495043... > .git/refs/my-great-ref
+% git log my-great-ref
+
+commit 8495043ef1734f7d23a6d116e596bd97e404e48c
+Author: Jordan Ryan Reuter <me@jreut.com>
+Date:   Fri Jul 14 17:27:23 2017 -0400
+```
+
+## checkout our ref
+
+```sh
+% git checkout my-great-ref
+
+You are in 'detached HEAD' state.
+
+% cat .git/HEAD
+
+8495043ef1734f7d23a6d116e596bd97e404e48c
+```
+
+### what does that mean?
+
+```sh
+% mv .git/refs/my-great-ref .git/refs/heads/my-great-ref
+% git checkout my-great-ref
+% cat .git/HEAD
+
+ref: refs/heads/my-great-ref
+```
+
+## refs and branches
+
+### branch = file in `refs/heads`
+
+```sh
+% git branch
+
+  master
+* my-great-ref
+```
+
+# interlude
+
+## how it's made: `git checkout -b my-branch`
+
+1. read current `HEAD`
+1. write `refs/heads/my-branch`
+1. write new `HEAD` with `ref: refs/heads/my-branch`
+
+## how it's made: `git commit ...`
+
+1. read current `HEAD` (say, `ref: refs/heads/my-branch`)
+1. write commit with "stage" tree, current head as parent, etc.
+1. write new commit id to `refs/heads/my-branch`
+
+## how it's made: `git reset some-ref`
+
+1. read current `HEAD` (say, `refs: refs/heads/my-branch`)
+1. read commit referenced by `some-ref`
+1. write commit id to `refs/heads/my-branch`
